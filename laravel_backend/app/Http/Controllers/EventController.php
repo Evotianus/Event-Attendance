@@ -40,9 +40,9 @@ class EventController extends Controller
             ['verification_code', '=', $request->code],
         ])->get();
 
-        return $transaction;
+        // return $transaction->count();
 
-        if ($transaction->count() == 0) {
+        if ($transaction->count() <= 0) {
             return response()->json(['message' => 'Failed'], 400);
         }
 

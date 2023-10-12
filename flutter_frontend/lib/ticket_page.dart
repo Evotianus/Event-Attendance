@@ -38,7 +38,8 @@ class TicketPage extends StatelessWidget {
               backgroundColor: backgroundColor,
               body: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25, right: 25, top: 50),
+                  padding: const EdgeInsets.only(
+                      left: 25, right: 25, top: 50, bottom: 30),
                   child: Column(
                     children: [
                       Row(
@@ -303,7 +304,7 @@ class TicketPage extends StatelessWidget {
                                     // ),
                                     // backgroundColor: Colors.white,
                                   ),
-                                  SizedBox(height: 10),
+                                  SizedBox(height: 20),
                                   // Container(
                                   //   width: 200,
                                   //   height: 200,

@@ -2,8 +2,8 @@ import '../class/event.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-String uri = "http://10.0.2.2:8000/api";
-// String uri = "https://event-attendance.000webhostapp.com/api";
+// String uri = "http://10.0.2.2:8000/api";
+String uri = "https://event-attendance.000webhostapp.com/api";
 
 Future<List<Event>?> getEvent(path) async {
   final response = await http.post(

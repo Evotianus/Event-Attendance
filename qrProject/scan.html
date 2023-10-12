@@ -27,8 +27,8 @@
 	<link rel="stylesheet" href="css/glightbox.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="js/event-detail.js" defer></script>
-	<script src="js/scan.js"></script>
 
 	<title>Archiark &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
 </head>
@@ -89,17 +89,41 @@
                         font-size: 1.5rem;
 						position: absolute;
                     }
+
+					.notification-box {
+						position: fixed;
+						top: -70px;
+						left: 50;
+						padding: 10px 20px;
+						margin-top: 20px;
+						border: none;
+						font-size: 18px;
+						transition: all 0.2s;
+						border-radius: 50px;
+						z-index: 100;
+					}
+					
+					.success {
+						background-color: rgb(55, 224, 55);
+						color: white;
+					}
+					
+					.failed {
+						background-color: red;
+						color: white;
+					}
                 </style>
 
                 <main>
                     <div id="reader"></div>
                     <div id="result"></div>
+					<div class="success notification-box"><i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Ticket Verified!</div>
+					<div class="failed notification-box"><i class="fa fa-close"></i>&nbsp;&nbsp;&nbsp;Unverified Ticket!</div>
+					<!-- <button class="example-button">Click Me!</button> -->
                 </main>
 
-				<script src="./node_modules/axios/dist/axios.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.js" integrity="sha512-kFoMebJcPxdfDstjuwbbJN3q7hQ6O6npC9exDmbTR7HZZUC50s7DKl/MJSiukySAolVrcVmaLRHTmRjwnGCFow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 <script>
-					
-
                     const scanner = new Html5QrcodeScanner('reader', {
                         qrbox: {
                             width: 250,
@@ -107,81 +131,101 @@
                         },
                         fps: 20,
                     });
+					const successNotificationBox = document.querySelector(".success");
+					const failedNotificationBox = document.querySelector(".failed");
                     
                     scanner.render(success, error);
 
+					function notificationBox(condition) {
+						if (condition) {
+							successNotificationBox.style.top = 0;
+						}
+						else {
+							failedNotificationBox.style.top = 0;
+						}
+
+						setTimeout(() => {
+							successNotificationBox.style.top = "-100px";
+							failedNotificationBox.style.top = "-100px";
+						}, 5000);
+					}
 					
                     function success(result) {
-						// axios.post('https://event-attendance.000webhostapp.com/api/get-event').then((response) => {
-						// 	console.log(response);
-						// 	console.log(response.data[0]['id']);
-						// }, (error) => {
-						// 	console.log(error);
-						// });
+						const eventCode = ["VFNDLTAwMQ==", "VFNDLTAwMg==", "VFNDLTAwMw==", "VFNDLTAwNA==", "VFNDLTAwNQ==", "VFNDLTAwNg==", "VFNDLTAwNw==", "VFNDLTAwOA==", "VFNDLTAwOQ==", "VFNDLTAxMA==", "VFNDLTAxMQ==", "VFNDLTAxMg==", "VFNDLTAxMw==", "VFNDLTAxNA==", "VFNDLTAxNQ=="]
 
-						console.log(JSON.stringify({
-							event_id: localStorage.getItem('event_id'),
-							code: result,
-						}));
-						
-						// <p><a href="${result}">${result}</a></p>
-						document.getElementById('result').innerHTML = `
-						<h2 style="color: white;">Welcome!</h2>
-						`;
-						setTimeout(() => {
-							document.getElementById('result').innerHTML = ``;
-						}, 3000);
-						// scanner.clear();
-							// document.getElementById('reader').remove();
+						if (eventCode.includes(result)) {
+							console.log("success");
+							notificationBox(true);
+							// <p><a href="${result}">${result}</a></p>
+							// scanner.clear();
+						} else {
+							console.log("failed");
+							notificationBox(false);
+							// <p><a href="${result}">${result}</a></p>
+							// scanner.clear();
+						}
+						// console.log(JSON.stringify({
+						// 	"event_id": localStorage.getItem('event_id'),
+						// 	"code": result,
+						// }));
 
-						// axios.post('https://event-attendance.000webhostapp.com/api/verify-event', {
+						// console.log(result);
+
+						// const xhttp = new XMLHttpRequest();
+						// const url = "http://localhost:8000/api/verify-event"
+						// const data = JSON.stringify({
+						// 	event_id: localStorage.getItem('event_id'),
+						// 	code: result,
+						// })
+						// xhttp.open("POST", url, true)
+						// xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+						// xhttp.send(data)
+
+						// xhttp.onreadystatechange = function() {
+						// 	if(this.readyState == 4 && this.status == 200) {
+						// 		console.log(xhttp.responseText)
+						// 	}
+						// }
+
+						// axios.post('http://localhost:8000/api/verify-event/', {
 						// 	event_id: localStorage.getItem('event_id'),
 						// 	code: result,
 						// }).then((response) => {
-						// 	console.log(response.data);
+						// 	console.log("success");
 						// 	document.getElementById('result').innerHTML = `
 						// 	<h2>Success!</h2>
 						// 	<p><a href="${result}">${result}</a></p>
 						// 	`;
 						// 	scanner.clear();
-						// 	// document.getElementById('reader').remove();
-
-						// 	return;
+						// 	document.getElementById('reader').remove();
 						// }).catch((error) => {
+						// 	console.log("failed");
 						// 	document.getElementById('result').innerHTML = `
 						// 	<h2>Failed!</h2>
 						// 	<p><a href="${result}">${result}</a></p>
 						// 	`;
 						// 	scanner.clear();
-						// 	// document.getElementById('reader').remove();
-
-						// 	return;
-						// });
-                        // axios.post('https://event-attendance.000webhostapp.com/api/verify-event', {
-						//  	event_id: localStorage.getItem('event_id'),
-						//  	code: result,
-						//  }).then((response) => {
-						// 	console.log(response);
-						// 	// console.log(response.data[0]['id']);
-						// }, (error) => {
-						// 	console.log(error);
-						// });
-
-					// 	axios.post('https://event-attendance.000webhostapp.com/api/verify-event', {
-					// 	  	event_id: localStorage.getItem('event_id'),
-					// 	  	code: result,
-					// 	  }).then((response) => {
-
-					// 	console.log(response.data);
-					// }, (error) => {
-					// 	console.log(error);
-					// });
-						// console.log(result);
+						// 	document.getElementById('reader').remove();
+						// })
                     }
 
                     function error(err) {
                         console.error(err);
                     }
+
+					// let btn = document.querySelector('.example-button')
+					// btn.addEventListener('click', (e) => {
+					// 	e.preventDefault();
+
+					// 	axios.post('http://localhost:8000/api/verify-event/', {
+					// 		event_id: localStorage.getItem('event_id'),
+					// 		code: "VFNDLTAxNQ==",
+					// 	}).then((response) => {
+					// 		console.log("success");
+					// 	}).catch((error) => {
+					// 		console.log("failed");
+					// 	});
+					// })
                 </script>
 			</div>
 		</div>

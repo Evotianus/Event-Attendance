@@ -134,21 +134,6 @@ class DetailPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Container(
-                                        color: Colors.black.withOpacity(0.2),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: [
-                                              Text("NOV"),
-                                              Text(
-                                                "28",
-                                                style: TextStyle(fontSize: 18),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
                                     ],
                                   ),
                                   SizedBox(height: 20),
@@ -167,6 +152,9 @@ class DetailPage extends StatelessWidget {
                                       color: Colors.black.withOpacity(0.4),
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 100,
+                                  )
                                 ],
                               ),
                             ),
@@ -175,6 +163,29 @@ class DetailPage extends StatelessWidget {
                       )
                     ],
                   ),
+                  Positioned(
+                      right: 20,
+                      top: 60,
+                      child: Container(
+                        color: primaryColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                "NOV",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                              Text(
+                                "28",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )),
                   Positioned(
                     top: 60,
                     left: 20,
@@ -224,15 +235,15 @@ class DetailPage extends StatelessWidget {
                             );
                           },
                           borderRadius: BorderRadius.circular(100),
-                          child: Ink(
+                          child: Container(
                             height: 60,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100),
-                              color: primaryColor,
+                              color: Color(0xff1b4965),
                             ),
                             child: Center(
                               child: Text(
-                                "Buy Ticket Now!",
+                                "Book Ticket",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
